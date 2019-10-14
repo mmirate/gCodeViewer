@@ -137,14 +137,20 @@ GCODE.ui = (function(){
         for (var x = 0; x <= layerNum; x++) {
           aggFilamentUsed += parseFloat(GCODE.gCodeReader.getLayerFilament(GCODE.renderer.getZ(x)).toFixed(2));
         }
-        aggFilamentUsed = aggFilamentUsed.toFixed(2)
+        aggFilamentUsed = aggFilamentUsed.toFixed(2);
+
+        var printSecondsThisLayer = parseFloat(GCODE.gCodeReader.getModelInfo().printTimeByLayer[z]);
+        var printH = Math.floor(printSecondsThisLayer/3600).toFixed(1);
+        var printM = Math.floor(printSecondsThisLayer%3600/60).toFixed(1);
+        var printS = (printSecondsThisLayer%60).toFixed(1);
+        var printHMS = "(" + printH + ":" + printM + ":" + printS + ")";
 
         output.push("Layer number: " + layerNum);
         output.push("Layer height (mm): " + z);
         output.push("GCODE commands in layer: " + segments);
         output.push("Filament used by layer (mm): " + filament.toFixed(2));
         output.push("Filament used, summed (mm): " + aggFilamentUsed);
-        output.push("Print time for layer: " + parseFloat(GCODE.gCodeReader.getModelInfo().printTimeByLayer[z]).toFixed(1) + "sec");
+        output.push("Print time for layer: " + printSecondsThisLayer.toFixed(1) + "sec " + printHMS);
 
         if(renderOptions['speedDisplayType'] === displayType.speed){
             var res = prepareSpeedsInfo(layerNum);
