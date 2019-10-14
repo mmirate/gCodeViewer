@@ -140,10 +140,10 @@ GCODE.ui = (function(){
         aggFilamentUsed = aggFilamentUsed.toFixed(2);
 
         var printSecondsThisLayer = parseFloat(GCODE.gCodeReader.getModelInfo().printTimeByLayer[z]);
-        var printH = Math.floor(printSecondsThisLayer/3600).toFixed(1);
-        var printM = Math.floor(printSecondsThisLayer%3600/60).toFixed(1);
-        var printS = (printSecondsThisLayer%60).toFixed(1);
-        var printHMS = "(" + printH + ":" + printM + ":" + printS + ")";
+        var printH = Math.floor(printSecondsThisLayer/3600).toFixed().padStart(2, '0');
+        var printM = Math.floor(printSecondsThisLayer%3600/60).toFixed().padStart(2, '0');
+        var printS = (printSecondsThisLayer%60).toFixed().padStart(2, '0');
+        var printHMS = "(~" + printH + ":" + printM + ":" + printS + ")";
 
         output.push("Layer number: " + layerNum);
         output.push("Layer height (mm): " + z);
